@@ -1,26 +1,39 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
+import {ProductType} from '../types'
 
 interface StepProps {
   children: React.ReactNode
-  next: string
 }
 
-export const Step: React.FC<StepProps> = ({ next, children }) => {
+export const Step: React.FC<StepProps> = ({  children }) => {
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+  const { product, step = '0' } = useParams<{
+    product: ProductType
+    step: string
+  }>()
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
 
     const formData = new FormData(event.currentTarget)
-    const username = formData.get('username') as string
-    console.log(navigate, username)
-    navigate(next)
+    const newSearchParams = new URLSearchParams(searchParams)
+
+    for (const [key, val] of formData.entries()) {
+      if (typeof val === 'string') {
+        newSearchParams.set(key, val)
+      }
+    }
+
+    const next = `/${product}/${Number.parseInt(step) + 1}`
+    navigate(`${next}?${newSearchParams.toString()}`)
   }
 
   return (
     <form onSubmit={handleSubmit}>
       {children}
+
       <button type="submit">Next</button>
     </form>
   )

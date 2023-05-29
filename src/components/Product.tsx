@@ -1,10 +1,21 @@
 import React from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useSearchParams } from 'react-router-dom'
+
 import { Step } from './Step'
+import { ProductType } from '../types'
 
-export type InsuranceType = 'developer' | 'designer'
-
-export type ProductType = `${InsuranceType}-insurance`
+const commonComponents = [
+  <Step>
+    <label>
+      Age <input id="age" name="age" type="number" />
+    </label>
+  </Step>,
+  <Step>
+    <label>
+      Email <input id="email" name="email" type="email" />
+    </label>
+  </Step>,
+]
 
 const config: Record<
   ProductType,
@@ -12,18 +23,20 @@ const config: Record<
 > = {
   'developer-insurance': {
     title: 'Developer Insurance',
-    components: [
-      <Step next="/buy/developer-insurance/1">Step 1</Step>,
-      <Step next="/buy/developer-insurance/2">Step 2</Step>,
-      <Step next="/buy/developer-insurance/3">Step 3</Step>,
-    ],
+    components: commonComponents,
   },
   'designer-insurance': {
     title: 'Designer Insurance',
     components: [
-      <Step next="/buy/designer-insurance/1">Step 1</Step>,
-      <Step next="/buy/designer-insurance/2">Step 2</Step>,
-      <Step next="/buy/designer-insurance/3">Step 3</Step>,
+      ...commonComponents,
+      <Step>
+        <label>
+          First Name <input id="firstName" name="firstName" type="text" />
+        </label>
+        <label>
+          Last Name <input id="lastName" name="lastName" type="text" />
+        </label>
+      </Step>,
     ],
   },
 }
@@ -40,12 +53,17 @@ export const Product: React.FC = () => {
   return (
     <section className="Product">
       <h2>{title}</h2>
-      <div>{step}</div>
       <div>{currentStep}</div>
     </section>
   )
 }
 
 function Summary() {
-  return <>Summary</>
+  const [searchParams] = useSearchParams()
+
+  return (
+    <>
+      Summary <pre>{searchParams.toString()}</pre>
+    </>
+  )
 }
