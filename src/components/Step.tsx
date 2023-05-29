@@ -1,18 +1,24 @@
 import React from 'react'
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
-import {ProductType} from '../types'
+import {
+  useNavigate,
+  useParams,
+  useSearchParams,
+  useLocation,
+} from 'react-router-dom'
+import { ProductType } from '../types'
 
 interface StepProps {
   children: React.ReactNode
 }
 
-export const Step: React.FC<StepProps> = ({  children }) => {
+export const Step: React.FC<StepProps> = ({ children }) => {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const { product, step = '0' } = useParams<{
     product: ProductType
     step: string
   }>()
+  const baseUrl = useLocation().pathname.split('/')[1]
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -26,8 +32,11 @@ export const Step: React.FC<StepProps> = ({  children }) => {
       }
     }
 
-    const next = `/${product}/${Number.parseInt(step) + 1}`
-    navigate(`${next}?${newSearchParams.toString()}`)
+    navigate(
+      `/${[baseUrl, product, Number.parseInt(step) + 1].join(
+        '/'
+      )}?${newSearchParams.toString()}`
+    )
   }
 
   return (
