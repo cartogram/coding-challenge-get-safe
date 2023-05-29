@@ -1,46 +1,17 @@
-# Getting Started with Create React App
+# GetSafe Coding Challenge for Senior Frontend Developer
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Context
 
-## Available Scripts
+This project represents an (overly simplified) application that implements the insurance buying flow (further referred to as “buyflow”). A buyflow is a sequence of steps arranged in a specific order. Each step collects some data from a user that is later presented for confirmation in the summary step. In a real-life project this would be followed by the checkout and purchase process, but these parts are excluded from this project for the sake of simplicity.
 
-In the project directory, you can run:
+## Assignment
 
-### `yarn start`
+Add a new flow next to the existing developer insurance buyflow for a “designer insurance”. The flow should have the same steps as the dev insurance but with 1 additional step to collect the customer’s first and last name and display them in the summary step. Make sure it is not possible to proceed to the next step if the required field data is missing.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Some things to keep in mind
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- The code of the provided application is not final and is intentionally left not ideal. That means that it is expected of you to change it if you believe it improves code readability, maintainability, and scalability or if you believe the code deviates from the industry standards or best practices.
+- Treat this like a production app and assume that once you’re done with this feature, more features will be added to it by you and your coworkers. That means check the details of what you’re doing and how it should fit into the codebase.
+- The scope of this task is purely functional. UI and UX aspects are not important.
+- You shouldn’t need to add additional package dependencies to complete the task, but you can if you want.
+- Try to keep your commits history well organised and clean, like you would do in a pull request for a real task assignment.
