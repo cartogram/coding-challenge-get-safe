@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 interface EmailStepProps {
-  cb: (field: string, value: string) => void
+  cb: (field: Record<string, string>) => void
 }
 
 const EmailStep: React.FC<EmailStepProps> = (props) => {
@@ -18,7 +18,7 @@ const EmailStep: React.FC<EmailStepProps> = (props) => {
           value={email}
         ></input>
       </div>
-      <button onClick={() => props.cb('email', email)}>Next</button>
+      <button onClick={() => props.cb({ email })}>Next</button>
     </>
   )
 }
