@@ -1,31 +1,36 @@
-import React from 'react'
 import logo from './logo.svg'
 import './App.css'
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import Buyflow from './buyflow/Buyflow'
+import { Routes, Route, Link } from 'react-router-dom'
 
 const App = () => {
   return (
-    <Router>
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-        </header>
-        <Switch>
-          <Route path="/buy/insurance/:product">
-            <Buyflow />
-          </Route>
+    <div className="App">
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+      </header>
+      <Routes>
+        <Route index element={<Home />} />
+        <Route path="/buy/insurance/:product" element={<Buyflow />} />
+        <Route path="*" element={<NoMatch />} />
+      </Routes>
+    </div>
+  )
+}
 
-          <Route path="/">
-            <p>Welcome to Getsafe's Developer Insurance</p>
-            <Link to="/buy/insurance/dev">Get started!</Link>
+function NoMatch() {
+  return <p>Not found</p>
+}
 
-            <p>Welcome to Getsafe's Designer Insurance</p>
-            <Link to="/buy/insurance/des">Get started!</Link>
-          </Route>
-        </Switch>
-      </div>
-    </Router>
+function Home() {
+  return (
+    <>
+      <p>Welcome to Getsafe's Developer Insurance</p>
+      <Link to="/buy/insurance/dev">Get started!</Link>
+
+      <p>Welcome to Getsafe's Designer Insurance</p>
+      <Link to="/buy/insurance/des">Get started!</Link>
+    </>
   )
 }
 
