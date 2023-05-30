@@ -7,11 +7,7 @@ import {
 } from 'react-router-dom'
 import { ProductType } from '../types'
 
-interface StepProps {
-  children: React.ReactNode
-}
-
-export const Step: React.FC<StepProps> = ({ children }) => {
+export const Step: React.FC<React.PropsWithChildren> = ({ children }) => {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const { product, step = '0' } = useParams<{

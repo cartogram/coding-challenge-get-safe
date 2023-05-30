@@ -1,7 +1,8 @@
 import React from 'react'
-import { useParams, useSearchParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 
 import { Step } from './Step'
+import { Summary } from './Summary'
 import { ProductType } from '../types'
 
 const commonComponents = [
@@ -55,15 +56,5 @@ export const Product: React.FC = () => {
       <h2>{title}</h2>
       <div>{currentStep}</div>
     </section>
-  )
-}
-
-function Summary() {
-  const [searchParams] = useSearchParams()
-
-  return (
-    <>
-      Summary <pre>{searchParams.toString()}</pre>
-    </>
   )
 }
