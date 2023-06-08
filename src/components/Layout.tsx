@@ -5,7 +5,7 @@ import logo from '../images/logo.svg'
 
 export const Layout: React.FC = () => {
   return (
-    <>
+    <main className="Layout">
       <header className="Header">
         <Link to="/">
           <img src={logo} className="Logo" alt="Getsafe Logo" />
@@ -14,6 +14,6 @@ export const Layout: React.FC = () => {
       <div className="Container">
         <Outlet />
       </div>
-    </>
+    </main>
   )
 }

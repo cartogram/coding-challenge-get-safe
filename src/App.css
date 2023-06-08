@@ -6,7 +6,6 @@
 }
 
 .Hero {
-  text-align: center;
 }
 
 .Nav {
@@ -14,4 +13,27 @@
   align-items: center;
   justify-content: center;
   gap: 1rem;
+}
+
+.Layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr auto;
+  gap: 1rem;
+  min-height: 100vh;
+  text-align: center;
+}
+
+.Step {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.Field {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
