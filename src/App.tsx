@@ -1,24 +1,46 @@
-import { Routes, Route } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import { Layout } from './components/Layout'
 import { NotFound } from './components/NotFound'
 import { Home } from './components/Home'
-import { Product } from './components/Product'
+import {
+  Products,
+  loader as ProductLoader,
+  action as ProductAction,
+} from './components/Product'
 import { BuyFlow } from './components/BuyFlow'
+import { Error } from './components/Error'
 
 import './App.css'
 
-const App = () => {
+function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route index element={<Home />} />
-        <Route path="/buy" element={<BuyFlow />}>
-          <Route path=":product/:step?" element={<Product />} />
-        </Route>
-        <Route path="*" element={<NotFound />} />
-      </Route>
-    </Routes>
+    <RouterProvider
+      router={createBrowserRouter([
+        {
+          path: '/',
+          Component: Layout,
+          errorElement: <Error />,
+          children: [
+            {
+              index: true,
+              Component: Home,
+            },
+            {
+              path: 'buy/:product',
+              Component: Products,
+              loader: ProductLoader,
+              action: ProductAction,
+            },
+            {
+              path: '*',
+              Component: NotFound,
+            },
+          ],
+        },
+      ])}
+      fallbackElement={<p>Loading...</p>}
+    />
   )
 }
 
