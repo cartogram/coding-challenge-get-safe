@@ -5,10 +5,9 @@ import { NotFound } from './components/NotFound'
 import { Home } from './components/Home'
 import {
   Products,
-  loader as ProductLoader,
-  action as ProductAction,
-} from './components/Product'
-import { BuyFlow } from './components/BuyFlow'
+  loader as ProductsLoader,
+  action as ProductsAction,
+} from './components/Products'
 import { Error } from './components/Error'
 
 import './App.css'
@@ -29,8 +28,8 @@ function App() {
             {
               path: 'buy/:product',
               Component: Products,
-              loader: ProductLoader,
-              action: ProductAction,
+              loader: ProductsLoader,
+              action: ProductsAction,
             },
             {
               path: '*',

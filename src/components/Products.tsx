@@ -10,24 +10,9 @@ import {
 
 import { Step } from './Step'
 import { Summary } from './Summary'
+
+import * as api from '../lib/api'
 import { ProductType } from '../types'
-
-export async function action({ request, params }: ActionFunctionArgs) {
-  console.log('Product action', params)
-  const formData = await request.formData()
-  const { product, step, ...form } = formDataToObject(formData)
-  const newSearchParams = new URLSearchParams(request.url)
-
-  console.log(product)
-
-  for (const [key, val] of Object.entries(form)) {
-    newSearchParams.set(key, val)
-  }
-
-  const nextStepUrl = generatePath('/buy/:product', { product })
-  console.log(newSearchParams.toString())
-  return redirect(nextStepUrl)
-}
 
 export function loader({ params }: LoaderFunctionArgs) {
   console.log('Product loader')
@@ -36,18 +21,18 @@ export function loader({ params }: LoaderFunctionArgs) {
   return {}
 }
 
-export function ProductDeveloperInsurance() {
-  return (
-    <section className="Product">
-      <h1>Developer Insurance</h1>
-      <h2>Step </h2>
-      <Steps>
-        <EmailStep />
-        <FullNameStep />
-        <AgeStep />
-      </Steps>
-    </section>
-  )
+export async function action({ request, params }: ActionFunctionArgs) {
+  const { product = '' } = params
+  const form = await request.formData()
+  const data = formDataToObject(form)
+  const search = new URL(request.url).searchParams
+  const step = search.get('step') || '0'
+
+  await api.save(data)
+  search.set('step', String(Number(step) + 1))
+
+  const nextStepUrl = generatePath(`/buy/:product`, { product })
+  return redirect(`${nextStepUrl}?${search.toString()}`)
 }
 
 export const Products: React.FC = () => {
@@ -71,12 +56,18 @@ export const Products: React.FC = () => {
   }
 }
 
-export function Steps({ children }: React.PropsWithChildren<{}>) {
-  const [params] = useSearchParams()
-  const childrenArray = React.Children.toArray(children)
-  const currentStep = childrenArray[Number(params.get('step'))] || <Summary />
-
-  return <div className="Steps">{currentStep}</div>
+export function ProductDeveloperInsurance() {
+  return (
+    <section className="Product">
+      <h1>Developer Insurance</h1>
+      <h2>Step </h2>
+      <Steps>
+        <EmailStep />
+        <FullNameStep />
+        <AgeStep />
+      </Steps>
+    </section>
+  )
 }
 
 export function ProductDesignerInsurance() {
@@ -90,6 +81,15 @@ export function ProductDesignerInsurance() {
       </Steps>
     </section>
   )
+}
+
+export function Steps({ children }: React.PropsWithChildren<{}>) {
+  const [params] = useSearchParams()
+  const childrenArray = React.Children.toArray(children)
+  console.log(params.get('step'))
+  const currentStep = childrenArray[Number(params.get('step'))] || <Summary />
+
+  return <div className="Steps">{currentStep}</div>
 }
 
 export function AgeStep() {
@@ -107,7 +107,13 @@ export function EmailStep() {
   return (
     <Step>
       <label>
-        Email <input id="age" name="email" type="email" />
+        Email{' '}
+        <input
+          id="age"
+          name="email"
+          type="email"
+          defaultValue="mseccafien@gmail.com"
+        />
       </label>
     </Step>
   )
