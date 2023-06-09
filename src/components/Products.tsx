@@ -16,15 +16,31 @@ import * as api from '../lib/api'
 import { ProductType } from '../types'
 
 export function loader({ params }: LoaderFunctionArgs) {
-  return api.get()
+  return api.get() || {}
+}
+
+const LABELS = {
+  email: 'Email',
+  firstName: 'First Name',
+  lastName: 'Last Name',
+  age: 'Age',
+  'designer-insurance': 'Designer Insurance',
+  'developer-insurance': 'Developer Insurance',
 }
 
 export async function action({ request, params }: ActionFunctionArgs) {
   const product = params.product as ProductType
   const form = await request.formData()
-  const data = formDataToObject(form)
+  const { action, ...data } = formDataToObject(form)
   const search = new URL(request.url).searchParams
   const step = search.get('step') || '0'
+
+  if (action === 'purchase') {
+    await api.clear()
+    return redirect(
+      `/?${new URLSearchParams({ success: 'true', product }).toString()}`
+    )
+  }
 
   await api.save({ ...data, product })
   search.set('step', String(Number(step) + 1))
@@ -57,7 +73,7 @@ export const Products: React.FC = () => {
 export function ProductDeveloperInsurance() {
   return (
     <section className="Product">
-      <h1>Developer Insurance</h1>
+      <h1>{LABELS['developer-insurance']}</h1>
       <Steps>
         <EmailStep />
         <FullNameStep />
@@ -70,7 +86,7 @@ export function ProductDeveloperInsurance() {
 export function ProductDesignerInsurance() {
   return (
     <section className="Product">
-      <h1>Designer Insurance</h1>
+      <h1>{LABELS['designer-insurance']}</h1>
       <Steps>
         <EmailStep />
         <FullNameStep />
@@ -118,7 +134,7 @@ export function AgeStep() {
   return (
     <Step>
       <label htmlFor="age" className="Label">
-        <span>Age</span>
+        <span>{LABELS['age']}</span>
         <input
           id="age"
           name="age"
@@ -139,7 +155,7 @@ export function EmailStep() {
   return (
     <Step>
       <label htmlFor="email" className="Label">
-        <span>Email</span>
+        <span>{LABELS['email']}</span>
         <input
           id="email"
           name="email"
@@ -158,7 +174,7 @@ export function FullNameStep() {
   return (
     <Step>
       <label htmlFor="firstName" className="Label">
-        <span>First name</span>
+        <span>{LABELS['firstName']}</span>
         <input
           id="firstName"
           name="firstName"
@@ -167,7 +183,7 @@ export function FullNameStep() {
         />
       </label>
       <label htmlFor="lastName" className="Label">
-        <span>Last name</span>
+        <span>{LABELS['lastName']}</span>
         <input
           id="lastName"
           name="lastName"
@@ -193,18 +209,21 @@ export const Summary: React.FC<{ data: Record<string, string> }> = ({
 }: {
   data: Record<string, string>
 }) => {
+  const { product, ...rest } = data
   return (
-    <>
-      <h2>Summary</h2>
-      <dl>
-        {Object.entries(data).map(([key, value]) => (
-          <React.Fragment key={key}>
-            <dt>{key}</dt>
+    <Form className="Summary" method="post">
+      <h2>You are buying {LABELS[product as keyof typeof LABELS]}</h2>
+      <dl className="Summary">
+        {Object.entries(rest).map(([key, value]) => (
+          <span key={key} className="SummaryItem">
+            <dt>{LABELS[key as keyof typeof LABELS]}</dt>
             <dd>{value}</dd>
-          </React.Fragment>
+          </span>
         ))}
+        <input type="hidden" name="action" value="purchase" />
+        <button type="submit">Purchase</button>
       </dl>
-    </>
+    </Form>
   )
 }
 

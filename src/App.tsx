@@ -2,7 +2,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import { Layout } from './components/Layout'
 import { NotFound } from './components/NotFound'
-import { Home } from './components/Home'
+import { Home, loader as HomeLoader } from './components/Home'
 import {
   Products,
   loader as ProductsLoader,
@@ -22,6 +22,7 @@ function App() {
           errorElement: <Error />,
           children: [
             {
+              loader: HomeLoader,
               index: true,
               Component: Home,
             },
