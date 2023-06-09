@@ -1,27 +1,46 @@
-import React from 'react'
-import logo from './logo.svg'
-import './App.css'
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
-import Buyflow, { ProductIds } from './buyflow/Buyflow'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
-const App = () => {
+import { Layout } from './components/Layout'
+import { NotFound } from './components/NotFound'
+import { Home, loader as HomeLoader } from './components/Home'
+import {
+  Products,
+  loader as ProductsLoader,
+  action as ProductsAction,
+} from './components/Products'
+import { Error } from './components/Error'
+
+import './App.css'
+
+function App() {
   return (
-    <Router>
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-        </header>
-        <Switch>
-          <Route path="/buy/insurance_dev">
-            <Buyflow productId={ProductIds.devIns} />
-          </Route>
-          <Route path="/">
-            <p>Welcome to Getsafe's Developer Insurance</p>
-            <Link to="/buy/insurance_dev">Get started!</Link>
-          </Route>
-        </Switch>
-      </div>
-    </Router>
+    <RouterProvider
+      router={createBrowserRouter([
+        {
+          path: '/',
+          Component: Layout,
+          errorElement: <Error />,
+          children: [
+            {
+              loader: HomeLoader,
+              index: true,
+              Component: Home,
+            },
+            {
+              path: 'buy/:product',
+              Component: Products,
+              loader: ProductsLoader,
+              action: ProductsAction,
+            },
+            {
+              path: '*',
+              Component: NotFound,
+            },
+          ],
+        },
+      ])}
+      fallbackElement={<p>Loading...</p>}
+    />
   )
 }
 
