@@ -35,10 +35,6 @@ ul {
   text-align: center;
 }
 
-input {
-  font-family: var(--font-family-primary);
-}
-
 h1,
 h2,
 h3,
@@ -57,6 +53,7 @@ p {
 
 a,
 button {
+  appearance: none;
   font-size: 1rem;
   font-weight: normal;
   color: green;
@@ -69,4 +66,78 @@ button {
 button:hover,
 a:hover {
   text-decoration: underline;
+}
+
+input {
+  appearance: none;
+  font-family: var(--font-family-primary);
+}
+
+input:required {
+  border: 1px solid black;
+}
+
+input + span {
+  position: relative;
+}
+
+input:required + span::after {
+  font-size: 0.7rem;
+  position: absolute;
+  content: 'required';
+  color: white;
+  background-color: black;
+  padding: 5px 10px;
+  top: -26px;
+  left: -70px;
+}
+
+input + span {
+  position: relative;
+}
+
+input + span::before {
+  position: absolute;
+  right: -20px;
+  top: 5px;
+}
+
+input:invalid {
+  border: 2px solid red;
+}
+
+input:invalid + span::before {
+  content: '✖';
+  color: red;
+}
+
+input:valid + span::before {
+  content: '✓';
+  color: green;
+}
+
+input + span {
+  position: relative;
+}
+
+input + span::after {
+  font-size: 0.7rem;
+  position: absolute;
+  padding: 5px 10px;
+  top: -26px;
+}
+
+input:required + span::after {
+  color: white;
+  background-color: black;
+  content: 'Required';
+  left: -70px;
+}
+
+input:out-of-range + span::after {
+  color: white;
+  background-color: red;
+  width: 155px;
+  content: 'Outside allowable value range';
+  left: -182px;
 }

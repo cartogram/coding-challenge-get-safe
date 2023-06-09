@@ -5,7 +5,10 @@
   padding: 1rem;
 }
 
-.Hero {
+.Steps {
+  max-width: 800px;
+  margin: auto;
+  padding: 2rem;
 }
 
 .Nav {
@@ -36,4 +39,10 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
+}
+
+.Progress {
+  appearance: none;
+  width: 100%;
+  height: 3px;
 }
