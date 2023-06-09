@@ -75,9 +75,8 @@ export function ProductDeveloperInsurance() {
     <section className="Product">
       <h1>{LABELS['developer-insurance']}</h1>
       <Steps>
-        <EmailStep />
-        <FullNameStep />
         <AgeStep />
+        <EmailStep />
       </Steps>
     </section>
   )
@@ -88,6 +87,7 @@ export function ProductDesignerInsurance() {
     <section className="Product">
       <h1>{LABELS['designer-insurance']}</h1>
       <Steps>
+        <AgeStep />
         <EmailStep />
         <FullNameStep />
       </Steps>

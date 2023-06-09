@@ -28,33 +28,23 @@ describe('App', () => {
       expect(headerElement).toBeInTheDocument()
     })
 
-    it('renders the email field on the first step', async () => {
+    it('renders the age field on the first step', async () => {
       await renderWithRouter(<App />, { route: '/buy/developer-insurance' })
-      const emailField = screen.getByLabelText('Email')
+      const emailField = screen.getByLabelText('Age')
       expect(emailField).toBeInTheDocument()
     })
 
-    it('renders the name fields on the second step', async () => {
+    it('renders the email field on the second step', async () => {
       await renderWithRouter(<App />, {
         route: '/buy/developer-insurance?step=1',
       })
-      const firstNameField = screen.getByLabelText('First Name')
-      const lastNameField = screen.getByLabelText('Last Name')
-      expect(firstNameField).toBeInTheDocument()
-      expect(lastNameField).toBeInTheDocument()
-    })
-
-    it('renders the age field on the third step', async () => {
-      await renderWithRouter(<App />, {
-        route: '/buy/developer-insurance?step=2',
-      })
-      const ageField = screen.getByLabelText('Age')
+      const ageField = screen.getByLabelText('Email')
       expect(ageField).toBeInTheDocument()
     })
 
     it('renders the summary on the last step', async () => {
       await renderWithRouter(<App />, {
-        route: '/buy/developer-insurance?step=3',
+        route: '/buy/developer-insurance?step=2',
       })
       const summaryElement = screen.getByText('You are buying')
       expect(summaryElement).toBeInTheDocument()
@@ -68,15 +58,23 @@ describe('App', () => {
       expect(headerElement).toBeInTheDocument()
     })
 
-    it('renders the email field on the first step', async () => {
+    it('renders the age field on the first step', async () => {
       await renderWithRouter(<App />, { route: '/buy/designer-insurance' })
+      const emailField = screen.getByLabelText('Age')
+      expect(emailField).toBeInTheDocument()
+    })
+
+    it('renders the email field on the second step', async () => {
+      await renderWithRouter(<App />, {
+        route: '/buy/designer-insurance?step=1',
+      })
       const emailField = screen.getByLabelText('Email')
       expect(emailField).toBeInTheDocument()
     })
 
-    it('renders the name fields on the second step', async () => {
+    it('renders the name fields on the third step', async () => {
       await renderWithRouter(<App />, {
-        route: '/buy/designer-insurance?step=1',
+        route: '/buy/designer-insurance?step=2',
       })
       const firstNameField = screen.getByLabelText('First Name')
       const lastNameField = screen.getByLabelText('Last Name')
@@ -86,7 +84,7 @@ describe('App', () => {
 
     it('renders the summary on the last step', async () => {
       await renderWithRouter(<App />, {
-        route: '/buy/designer-insurance?step=2',
+        route: '/buy/designer-insurance?step=3',
       })
       const summaryElement = screen.getByText('You are buying')
       expect(summaryElement).toBeInTheDocument()
